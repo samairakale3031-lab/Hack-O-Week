@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Euro Crust | Artisan Bakery</title>
+    
+    <!-- Google Fonts for Magazine Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-text: #2c2c2c;
+            --secondary-text: #6e6e6e;
+            --accent-gold: #c5a059;
+            --card-bg: #ffffff;
+            --overlay-bg: rgba(255, 253, 245, 0.92); /* Creamy vintage paper look */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--primary-text);
+            /* Background: Vintage European Cafe Interior */
+            background-image: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2672&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            background-color: var(--overlay-bg);
+            padding: 50px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            min-height: 90vh;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid #eee;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-color: var(--accent-gold);
+        }
+
+        /* Badge Feature */
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--accent-gold);
+            color: white;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        /* Image Styling */
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            filter: brightness(0.95); /* Slightly dim images to blend */
+            transition: filter 0.3s;
+        }
+
+        .product-card:hover .product-img {
+            filter: brightness(1);
+        }
+
+        /* Typography */
+        .category {
+            font-size: 0.75rem;
+            color: var(--secondary-text);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            color: var(--primary-text);
+        }
+
+        .description {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1; /* Pushes price to bottom */
+        }
+
+        /* Footer (Price & Button) */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f5f5f5;
+            padding-top: 15px;
+            margin-top: auto;
+        }
+
+        .price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-text);
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+            padding: 6px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .add-btn {
+            background-color: var(--primary-text);
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-btn:hover {
+            background-color: var(--accent-gold);
+        }
+
+        /* Footer of Page */
+        .page-footer {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; margin: 0; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>The Euro Crust</h1>
+            <div class="tagline">Artisan Bakery & Café</div>
+        </header>
+
+        <main class="product-grid">
+            
+            <!-- Product 1: Croissant -->
+            <article class="product-card">
+                <div class="badge">Bestseller</div>
+                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=2626&auto=format&fit=crop" alt="Croissant" class="product-img">
+                <div class="category">Pastry</div>
+                <h2 class="product-title">Classic Butter Croissant</h2>
+                <p class="description">Flaky, golden layers made with imported French butter and 24-hour fermentation.</p>
+                <div class="card-footer">
+                    <div class="price">₹85</div>
+                    <div class="actions">
+                        <input type="number" min="1" value="1">
+                        <button class="add-btn" onclick="addToCart('Croissant')">Add</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 2: Sourdough (UPDATED IMAGE) -->
+            <article class="product-card">
+                <img src="C:\Users\SIT.LAB8\Downloads\sourdoug bread.jpg" alt="Sourdough Bread" class="product-img">
+                <div class="category">Bread</div>
+                <h2 class="product-title">Rustic Sourdough</h2>
+                <p class="description">Traditional stone-hearth baked sourdough with a crisp crust and airy crumb.</p>
+                <div class="card-footer">
+                    <div class="price">₹250</div>
+                    <div class="actions">
+                        <input type="number" min="1" value="1">
+                        <button class="add-btn" onclick="addToCart('Sourdough')">Add</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 3: Choco Chip Cookie (UPDATED IMAGE) -->
+            <article class="product-card">
+                <img src="C:\Users\SIT.LAB8\Downloads\cookie.jpg" alt="Cookie" class="product-img">
+                <div class="category">Sweet Treat</div>
+                <h2 class="product-title">Hazelnut Choco-Chip</h2>
+                <p class="description">Crispy on the edges, chewy in the middle, loaded with Belgian dark chocolate.</p>
+                <div class="card-footer">
+                    <div class="price">₹60</div>
+                    <div class="actions">
+                        <input type="number" min="1" value="1">
+                        <button class="add-btn" onclick="addToCart('Cookie')">Add</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 4: Cupcake (UPDATED IMAGE) -->
+            <article class="product-card">
+                <img src="C:\Users\SIT.LAB8\Downloads\cupcake.jpg" alt="Cupcake" class="product-img">
+                <div class="category">Dessert</div>
+                <h2 class="product-title">Red Velvet Cupcake</h2>
+                <p class="description">Classic cocoa-red sponge topped with a generous swirl of cream cheese frosting.</p>
+                <div class="card-footer">
+                    <div class="price">₹120</div>
+                    <div class="actions">
+                        <input type="number" min="1" value="1">
+                        <button class="add-btn" onclick="addToCart('Cupcake')">Add</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 5: Cinnamon Roll -->
+            <article class="product-card">
+                <div class="badge">New</div>
+                <img src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?q=80&w=2670&auto=format&fit=crop" alt="Cinnamon Roll" class="product-img">
+                <div class="category">Pastry</div>
+                <h2 class="product-title">Glazed Cinnamon Roll</h2>
+                <p class="description">Warm, spiced dough rolled with cinnamon sugar and finished with vanilla glaze.</p>
+                <div class="card-footer">
+                    <div class="price">₹110</div>
+                    <div class="actions">
+                        <input type="number" min="1" value="1">
+                        <button class="add-btn" onclick="addToCart('Cinnamon Roll')">Add</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 6: Coffee -->
+            <article class="product-card">
+                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=2628&auto=format&fit=crop" alt="Coffee" class="product-img">
+                <div class="category">Beverage</div>
+                <h2 class="product-title">Café Latte</h2>
+                <p class="description">Double espresso with perfectly steamed milk and a delicate art design.</p>
+                <div class="card-footer">
+                    <div class="price">₹150</div>
+                    <div class="actions">
+                        <input type="number" min="1" value="1">
+                        <button class="add-btn" onclick="addToCart('Latte')">Add</button>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <div class="page-footer">
+            <p>&copy; 2023 The Euro Crust Bakery. Made with love in India.</p>
+        </div>
+    </div>
+
+    <script>
+        function addToCart(itemName) {
+            // In a real app, this would add to a database or local storage
+            alert(itemName + " has been added to your cart!");
+        }
+    </script>
+</body>
+</html>
