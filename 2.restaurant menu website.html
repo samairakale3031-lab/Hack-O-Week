@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <title>Fun Pastel Kids Menu - 4 Pages</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 0;
+      background: #f0f4f8;
+      font-family: 'Comic Neue', cursive;
+      color: #333;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .menu-wrapper {
+      width: 720px;
+      height: 960px;
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+      overflow: hidden;
+      position: relative;
+      user-select: none;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      z-index: 100;
+    }
+    .nav-buttons button {
+      background: #ff8dbb;
+      border: none;
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 18px;
+      padding: 12px 24px;
+      margin: 0 10px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(255, 141, 187, 0.5);
+      transition: background 0.3s ease;
+    }
+    .nav-buttons button:hover {
+      background: #ff65a3;
+    }
+
+    /* Page container */
+    .pages {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Each page */
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      padding: 40px 50px 90px 50px;
+      border-radius: 25px;
+      box-sizing: border-box;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .page.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Page titles */
+    .page h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 46px;
+      margin: 0 0 20px 0;
+      text-align: center;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+    .page h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 5px solid;
+      padding-bottom: 6px;
+      width: fit-content;
+      align-self: center;
+    }
+
+    /* Food items */
+    .menu-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 18px;
+      background: rgba(255 255 255 / 0.6);
+      border-radius: 16px;
+      padding: 8px 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+    .menu-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .menu-item img {
+      width: 70px;
+      height: 70px;
+      border-radius: 16px;
+      margin-right: 20px;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .menu-item-details {
+      flex: 1;
+    }
+    .menu-item-details span {
+      font-weight: 700;
+      font-size: 19px;
+      color: #4b4b4b;
+      display: block;
+      margin-bottom: 6px;
+      user-select: text;
+    }
+    .menu-item-details small {
+      font-weight: 500;
+      color: #777;
+      user-select: text;
+    }
+    .price {
+      font-family: 'Fredoka One', cursive;
+      font-size: 22px;
+      color: #ff6b9e;
+      font-weight: 900;
+      margin-left: 10px;
+      white-space: nowrap;
+      user-select: text;
+    }
+
+    /* Pastel backgrounds for each page */
+    .page-1 {
+      background: #ffd6e8; /* pastel pink */
+    }
+    .page-2 {
+      background: #b5eaea; /* pastel blue */
+    }
+    .page-3 {
+      background: #fcefb7; /* pastel yellow */
+    }
+    .page-4 {
+      background: #c6def1; /* pastel lavender */
+    }
+
+    /* Section headers color variations */
+    .page-1 h2 { border-color: #ff5ca3; color: #d63e78; }
+    .page-2 h2 { border-color: #00bcd4; color: #007f8c; }
+    .page-3 h2 { border-color: #f8c94a; color: #bb8700; }
+    .page-4 h2 { border-color: #9cbdff; color: #365fb6; }
+
+    /* Animated floating cartoon images (bubbles) */
+    .floating-icon {
+      position: absolute;
+      opacity: 0.7;
+      user-select: none;
+      pointer-events: none;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform;
+      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
+    }
+
+    /* Different animations for floating icons */
+    @keyframes floatUpDown1 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    @keyframes floatUpDown2 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    @keyframes floatUpDown3 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
+    }
+
+    .float1 {
+      animation: floatUpDown1 4s ease-in-out infinite;
+    }
+    .float2 {
+      animation: floatUpDown2 5s ease-in-out infinite;
+    }
+    .float3 {
+      animation: floatUpDown3 6s ease-in-out infinite;
+    }
+
+    /* Positions of floating icons on each page */
+    /* Page 1 icons */
+    .page-1 .floating-icon.icon1 { top: 80px; left: 40px; width: 90px; animation-duration: 4.5s; }
+    .page-1 .floating-icon.icon2 { top: 220px; right: 50px; width: 70px; animation-duration: 5.2s; }
+    .page-1 .floating-icon.icon3 { bottom: 140px; left: 200px; width: 100px; animation-duration: 4.2s; }
+
+    /* Page 2 icons */
+    .page-2 .floating-icon.icon1 { top: 100px; right: 80px; width: 80px; animation-duration: 4.8s; }
+    .page-2 .floating-icon.icon2 { bottom: 180px; left: 100px; width: 75px; animation-duration: 5.5s; }
+    .page-2 .floating-icon.icon3 { top: 260px; left: 50px; width: 95px; animation-duration: 4.3s; }
+
+    /* Page 3 icons */
+    .page-3 .floating-icon.icon1 { top: 120px; left: 120px; width: 90px; animation-duration: 4.6s; }
+    .page-3 .floating-icon.icon2 { bottom: 160px; right: 60px; width: 80px; animation-duration: 5.1s; }
+    .page-3 .floating-icon.icon3 { top: 200px; right: 150px; width: 100px; animation-duration: 4.0s; }
+
+    /* Page 4 icons */
+    .page-4 .floating-icon.icon1 { top: 60px; left: 90px; width: 80px; animation-duration: 4.4s; }
+    .page-4 .floating-icon.icon2 { bottom: 140px; left: 140px; width: 70px; animation-duration: 5.3s; }
+    .page-4 .floating-icon.icon3 { top: 280px; right: 40px; width: 90px; animation-duration: 4.7s; }
+
+    /* Scrollbar for overflow-y */
+    .page::-webkit-scrollbar {
+      width: 8px;
+    }
+    .page::-webkit-scrollbar-thumb {
+      background: #ff6b9e80;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-wrapper">
+
+    <div class="pages">
+
+      <!-- PAGE 1: Starters & Snacks -->
+      <div class="page page-1 active" id="page1">
+        <h1>Fun Bites</h1>
+        <h2>Starters & Snacks</h2>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046767.png" alt="Cheesy Fries" />
+          <div class="menu-item-details">
+            <span>Cheesy Fries</span>
+            <small>Golden fries topped with melted cheese</small>
+          </div>
+          <div class="price">$5</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/2274/2274700.png" alt="Chicken Nuggets" />
+          <div class="menu-item-details">
+            <span>Chicken Nuggets</span>
+            <small>Crispy bite-sized chicken pieces</small>
+          </div>
+          <div class="price">$7</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046759.png" alt="Pizza Slice" />
+          <div class="menu-item-details">
+            <span>Mini Pepperoni Pizza</span>
+            <small>Perfect-sized pizza with spicy pepperoni</small>
+          </div>
+          <div class="price">$8</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Mini Cheeseburger" />
+          <div class="menu-item-details">
+            <span>Mini Cheeseburger</span>
+            <small>Juicy burger with melted cheese & ketchup</small>
+          </div>
+          <div class="price">$9</div>
+        </div>
+
+        <!-- Floating cartoon images -->
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046753.png" alt="Ice Cream" class="floating-icon icon1 float1" />
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046764.png" alt="Burger" class="floating-icon icon2 float2" />
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046767.png" alt="Fries" class="floating-icon icon3 float3" />
+      </div>
+
+      <!-- PAGE 2: Main Course -->
+      <div class="page page-2" id="page2">
+        <h1>Fun Bites</h1>
+        <h2>Main Course</h2>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Grilled Chicken Wrap" />
+          <div class="menu-item-details">
+            <span>Grilled Chicken Wrap</span>
+            <small>Soft tortilla wrap with grilled chicken & veggies</small>
+          </div>
+          <div class="price">$11</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046762.png" alt="Mac & Cheese" />
+          <div class="menu-item-details">
+            <span>Mac & Cheese</span>
+            <small>Creamy macaroni with cheddar cheese sauce</small>
+          </div>
+          <div class="price">$10</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046773.png" alt="Classic Hot Dog" />
+          <div class="menu-item-details">
+            <span>Classic Hot Dog</span>
+            <small>Grilled sausage in a soft bun with toppings</small>
+          </div>
+          <div class="price">$9</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046781.png" alt="Fish Fingers" />
+          <div class="menu-item-details">
+            <span>Fish Fingers</span>
+            <small>Crispy fried fish sticks with tartar sauce</small>
+          </div>
+          <div class="price">$12</div>
+        </div>
+
+        <!-- Floating cartoon images -->
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046764.png" alt="Burger" class="floating-icon icon1 float1" />
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046753.png" alt="Ice Cream" class="floating-icon icon2 float2" />
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046762.png" alt="Pasta" class="floating-icon icon3 float3" />
+      </div>
+
+      <!-- PAGE 3: Desserts -->
+      <div class="page page-3" id="page3">
+        <h1>Fun Bites</h1>
+        <h2>Desserts</h2>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046753.png" alt="Rainbow Ice Cream Sundae" />
+          <div class="menu-item-details">
+            <span>Rainbow Ice Cream Sundae</span>
+            <small>Vanilla ice cream topped with rainbow sprinkles</small>
+          </div>
+          <div class="price">$6</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/4149/4149586.png" alt="Chocolate Cupcake" />
+          <div class="menu-item-details">
+            <span>Chocolate Cupcake</span>
+            <small>Moist chocolate cupcake with frosting</small>
+          </div>
+          <div class="price">$5</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046771.png" alt="Fruit Popsicle" />
+          <div class="menu-item-details">
+            <span>Fruit Popsicle</span>
+            <small>Refreshing fruit-flavored frozen treat</small>
+          </div>
+          <div class="price">$4</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046782.png" alt="Sprinkled Donut" />
+          <div class="menu-item-details">
+            <span>Sprinkled Donut</span>
+            <small>Glazed donut with colorful sprinkles</small>
+          </div>
+          <div class="price">$5</div>
+        </div>
+
+        <!-- Floating cartoon images -->
+        <img src="https://cdn-icons-png.flaticon.com/512/4149/4149645.png" alt="Water" class="floating-icon icon1 float1" />
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046771.png" alt="Popsicle" class="floating-icon icon2 float2" />
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046782.png" alt="Donut" class="floating-icon icon3 float3" />
+      </div>
+
+      <!-- PAGE 4: Drinks -->
+      <div class="page page-4" id="page4">
+        <h1>Fun Bites</h1>
+        <h2>Drinks</h2>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046757.png" alt="Chocolate Milkshake" />
+          <div class="menu-item-details">
+            <span>Chocolate Milkshake</span>
+            <small>Rich and creamy chocolate shake</small>
+          </div>
+          <div class="price">$6</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046756.png" alt="Fresh Orange Juice" />
+          <div class="menu-item-details">
+            <span>Fresh Orange Juice</span>
+            <small>100% squeezed fresh oranges</small>
+          </div>
+          <div class="price">$5</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046783.png" alt="Pink Lemonade" />
+          <div class="menu-item-details">
+            <span>Pink Lemonade</span>
+            <small>Sweet and tangy pink lemonade</small>
+          </div>
+          <div class="price">$5</div>
+        </div>
+
+        <div class="menu-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/4149/4149645.png" alt="Cool Water" />
+          <div class="menu-item-details">
+            <span>Cool Water</span>
+            <small>Refreshing and pure</small>
+          </div>
+          <div class="price">$2</div>
+        </div>
+
+        <!-- Floating cartoon images -->
+        <img src="https://cdn-icons-png.flaticon.com/512/1532/1532578.png" alt="Milkshake" class="floating-icon icon1 float1" />
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046783.png" alt="Lemonade" class="floating-icon icon2 float2" />
+        <img src="https://cdn-icons-png.flaticon.com/512/4149/4149645.png" alt="Water" class="floating-icon icon3 float3" />
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button id="prevBtn" aria-label="Previous page">← Prev</button>
+      <button id="nextBtn" aria-label="Next page">Next →</button>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to handle page navigation
+    const pages = document.querySelectorAll('.page');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentPage = 0;
+
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        if (i === index) {
+          page.classList.add('active');
+        } else {
+          page.classList.remove('active');
+        }
+      });
+      currentPage = index;
+      updateButtons();
+    }
+
+    function updateButtons() {
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === pages.length - 1;
+      prevBtn.style.opacity = prevBtn.disabled ? '0.4' : '1';
+      nextBtn.style.opacity = nextBtn.disabled ? '0.4' : '1';
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 0) {
+        showPage(currentPage - 1);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < pages.length - 1) {
+        showPage(currentPage + 1);
+      }
+    });
+
+    // Initialize
+    showPage(currentPage);
+  </script>
+</body>
+</html>
