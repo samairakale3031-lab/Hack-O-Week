@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hackathon 2026 Registration</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background: #000;
+    overflow-x: hidden;
+}
+
+/* BACKGROUND VIDEO */
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    filter: brightness(0.35) contrast(1.2);
+}
+
+/* PARTICLES */
+#particles {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+/* FLOATING ICONS */
+.floating {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: url('https://cdn-icons-png.flaticon.com/512/1051/1051277.png') no-repeat center;
+    background-size: contain;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.8;
+    top: 20%;
+    left: 10%;
+}
+.floating2 {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center;
+    background-size: contain;
+    animation: float2 8s ease-in-out infinite;
+    opacity: 0.7;
+    top: 60%;
+    left: 80%;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-30px) rotate(20deg); }
+    100% { transform: translateY(0) rotate(0); }
+}
+@keyframes float2 {
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-40px) rotate(-25deg); }
+    100% { transform: translateY(0) rotate(0); }
+}
+
+/* FORM CONTAINER */
+.form-container {
+    max-width: 650px;
+    margin: 60px auto;
+    padding: 40px;
+    background: rgba(0,0,0,0.85);
+    border-radius: 15px;
+    box-shadow: 0 0 40px rgba(0,255,255,0.6);
+}
+
+/* TEXT */
+h1 {
+    text-align: center;
+    color: #00ffff;
+    text-shadow: 0 0 15px #00ffff;
+}
+.subtitle {
+    text-align: center;
+    color: #aaa;
+}
+
+/* STEPS */
+.steps-indicator {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.step-dot {
+    width: 18px;
+    height: 18px;
+    margin: 0 6px;
+    border-radius: 50%;
+    background: #00ffff50;
+}
+.step-dot.active {
+    background: #00ffff;
+    box-shadow: 0 0 15px #00ffff;
+}
+
+/* FORM STEPS */
+.step { display: none; }
+.step.active { display: block; }
+
+/* INPUTS */
+label {
+    margin-top: 15px;
+    display: block;
+    color: #00ffff;
+}
+input, select, textarea {
+    width: 100%;
+    padding: 16px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 15px;
+}
+
+/* BUTTONS */
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+.btn {
+    width: 48%;
+    padding: 15px;
+    background: #00ffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn:hover {
+    background: #00b8b8;
+    color: #fff;
+}
+
+/* PARTICLES STYLE */
+.particle {
+    position: absolute;
+    background: #00ffff;
+    border-radius: 50%;
+    opacity: 0.5;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND VIDEO -->
+<video autoplay muted loop playsinline id="bg-video">
+    <source src="background.mp4" type="video/mp4">
+</video>
+
+<div id="particles"></div>
+<div class="floating"></div>
+<div class="floating2"></div>
+
+<div class="form-container">
+    <h1>Hackathon 2026 Registration</h1>
+    <p class="subtitle">Join the ultimate coding challenge 🚀</p>
+
+    <div class="steps-indicator">
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+    </div>
+
+    <form id="regForm">
+        <div class="step active">
+            <label>Full Name</label>
+            <input required>
+            <label>Email</label>
+            <input type="email" required>
+            <label>Phone</label>
+            <input type="tel" pattern="[0-9]{10}" required>
+        </div>
+
+        <div class="step">
+            <label>College</label>
+            <input required>
+            <label>Year</label>
+            <select required>
+                <option value="">Select</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+            </select>
+            <label>Team Name</label>
+            <input>
+        </div>
+
+        <div class="step">
+            <label>Skills</label>
+            <textarea rows="3"></textarea>
+            <label>GitHub / Portfolio</label>
+            <input type="url">
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn" onclick="nextPrev(-1)">Previous</button>
+            <button type="button" class="btn" onclick="nextPrev(1)">Next</button>
+        </div>
+    </form>
+</div>
+
+<script>
+let currentStep = 0;
+showStep(currentStep);
+
+function showStep(n) {
+    const steps = document.querySelectorAll(".step");
+    const dots = document.querySelectorAll(".step-dot");
+    steps.forEach(s => s.classList.remove("active"));
+    dots.forEach(d => d.classList.remove("active"));
+    steps[n].classList.add("active");
+    dots[n].classList.add("active");
+
+    document.querySelector(".btn-container button:first-child").style.display =
+        n === 0 ? "none" : "inline-block";
+
+    document.querySelector(".btn-container button:last-child").innerText =
+        n === steps.length - 1 ? "Submit" : "Next";
+}
+
+function nextPrev(n) {
+    const steps = document.querySelectorAll(".step");
+    const inputs = steps[currentStep].querySelectorAll("input, select, textarea");
+
+    for (let i of inputs) {
+        if (!i.checkValidity()) {
+            i.reportValidity();
+            return;
+        }
+    }
+
+    currentStep += n;
+
+    if (currentStep >= steps.length) {
+        alert("🎉 Registration Successful!");
+        document.getElementById("regForm").reset();
+        currentStep = 0;
+    }
+    showStep(currentStep);
+}
+
+/* PARTICLES */
+const container = document.getElementById("particles");
+const count = window.innerWidth < 768 ? 20 : 50;
+
+for (let i = 0; i < count; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.width = p.style.height = Math.random() * 4 + 2 + "px";
+    p.style.left = Math.random() * innerWidth + "px";
+    p.style.top = Math.random() * innerHeight + "px";
+    p.vx = Math.random() - 0.5;
+    p.vy = Math.random() - 0.5;
+    container.appendChild(p);
+}
+
+function animate() {
+    document.querySelectorAll(".particle").forEach(p => {
+        p.style.left = (parseFloat(p.style.left) + p.vx + innerWidth) % innerWidth + "px";
+        p.style.top = (parseFloat(p.style.top) + p.vy + innerHeight) % innerHeight + "px";
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
