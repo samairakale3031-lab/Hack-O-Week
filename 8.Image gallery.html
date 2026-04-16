@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fragments of Now</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Helvetica Neue', sans-serif;
+        background: #111;
+        color: white;
+    }
+
+    header {
+        text-align: center;
+        padding: 40px 20px 10px;
+    }
+
+    header h1 {
+        font-size: 3rem;
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    header p {
+        color: #aaa;
+        font-size: 1rem;
+    }
+
+    /* Pinterest Masonry */
+    .gallery {
+        column-count: 3;
+        column-gap: 12px;
+        padding: 15px;
+    }
+
+    .gallery img {
+        width: 100%;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .gallery img:hover {
+        opacity: 0.85;
+        transform: scale(1.02);
+    }
+
+    @media (max-width: 900px) {
+        .gallery { column-count: 2; }
+    }
+
+    @media (max-width: 500px) {
+        .gallery { column-count: 1; }
+    }
+
+    /* Lightbox */
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .lightbox img {
+        max-width: 90%;
+        max-height: 85%;
+        border-radius: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 35px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Fragments of Now</h1>
+    <p>A living collection of fleeting visuals</p>
+</header>
+
+<section class="gallery">
+    <img src="https://picsum.photos/400/600?random=11" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/500?random=12" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/700?random=13" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/550?random=14" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/650?random=15" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/480?random=16" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/720?random=17" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/530?random=18" onclick="openLightbox(this)">
+    <img src="https://picsum.photos/400/610?random=19" onclick="openLightbox(this)">
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img">
+</div>
+
+<script>
+function openLightbox(img) {
+    document.getElementById("lightbox").style.display = "flex";
+    document.getElementById("lightbox-img").src = img.src;
+}
+
+function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+}
+
+document.getElementById("lightbox").addEventListener("click", function(e) {
+    if (e.target !== document.getElementById("lightbox-img")) {
+        closeLightbox();
+    }
+});
+</script>
+
+</body>
+</html>
