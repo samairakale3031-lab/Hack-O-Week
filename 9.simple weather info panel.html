@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <!-- Importing a nice font from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* General Page Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Dark gradient background */
+            background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Container for the cards */
+        .weather-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* The Card Style (Glassmorphism) */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            color: white;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* City Header */
+        .city-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .city-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .date {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Weather Icon & Temp */
+        .weather-main {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .weather-icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .temperature {
+            font-size: 3.5rem;
+            font-weight: 300;
+        }
+
+        .condition {
+            font-size: 1.1rem;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+        }
+
+        /* Details Footer */
+        .details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            display: block;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Specific Card Background Gradients for variety */
+        .card.sun { background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 69, 0, 0.2)); }
+        .card.rain { background: linear-gradient(135deg, rgba(100, 149, 237, 0.2), rgba(70, 130, 180, 0.2)); }
+        .card.cloud { background: linear-gradient(135deg, rgba(169, 169, 169, 0.2), rgba(119, 136, 153, 0.2)); }
+
+    </style>
+</head>
+<body>
+
+    <div class="weather-container">
+
+        <!-- Card 1: Sunny -->
+        <div class="card sun">
+            <div class="city-header">
+                <span class="city-name">Dubai, AE</span>
+                <span class="date">Today, 12:00</span>
+            </div>
+            <div class="weather-main">
+                <span class="weather-icon">☀️</span>
+                <div class="temperature">38°</div>
+                <div class="condition">Sunny</div>
+            </div>
+            <div class="details">
+                <div class="detail-item">
+                    <span class="detail-label">Humidity</span>
+                    <span class="detail-value">24%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Wind</span>
+                    <span class="detail-value">12 km/h</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Rainy -->
+        <div class="card rain">
+            <div class="city-header">
+                <span class="city-name">London, UK</span>
+                <span class="date">Today, 12:00</span>
+            </div>
+            <div class="weather-main">
+                <span class="weather-icon">🌧️</span>
+                <div class="temperature">14°</div>
+                <div class="condition">Heavy Rain</div>
+            </div>
+            <div class="details">
+                <div class="detail-item">
+                    <span class="detail-label">Humidity</span>
+                    <span class="detail-value">82%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Wind</span>
+                    <span class="detail-value">25 km/h</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Cloudy -->
+        <div class="card cloud">
+            <div class="city-header">
+                <span class="city-name">New York, US</span>
+                <span class="date">Today, 12:00</span>
+            </div>
+            <div class="weather-main">
+                <span class="weather-icon">☁️</span>
+                <div class="temperature">21°</div>
+                <div class="condition">Partly Cloudy</div>
+            </div>
+            <div class="details">
+                <div class="detail-item">
+                    <span class="detail-label">Humidity</span>
+                    <span class="detail-value">45%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Wind</span>
+                    <span class="detail-value">18 km/h</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
