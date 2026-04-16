@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Thailand - The Land of Smiles</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0d5c63;
+            --secondary: #44a1a0;
+            --accent: #f2c14e;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --text: #333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--light);
+        }
+        
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1528181304800-259b08848526?w=1920');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+        
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 15px auto 0;
+        }
+        
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 20px 20px 0 var(--secondary);
+        }
+        
+        /* Stats Section */
+        .stats {
+            background: var(--primary);
+            color: white;
+            padding: 60px 40px;
+        }
+        
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .stat-item h2 {
+            font-size: 3rem;
+            color: var(--accent);
+        }
+        
+        .stat-item p {
+            font-size: 1.2rem;
+        }
+        
+        /* Cities Preview */
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .city-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .city-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .city-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .city-card-content {
+            padding: 25px;
+        }
+        
+        .city-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .city-card p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .city-card a {
+            color: var(--secondary);
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 250px);
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        
+        .gallery-item:nth-child(4) {
+            grid-column: span 2;
+        }
+        
+        /* Culture Section */
+        .culture-section {
+            background: white;
+        }
+        
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        
+        .culture-card {
+            text-align: center;
+            padding: 40px;
+            border-radius: 20px;
+            background: var(--light);
+        }
+        
+        .culture-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+        
+        .culture-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 1024px) {
+            .about-grid, .cities-grid, .culture-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+            .gallery-item:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .about-grid, .cities-grid, .culture-grid, .stats-container {
+                grid-template-columns: 1fr;
+            }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">🌴 Thailand</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="bangkok.html">Bangkok</a></li>
+                <li><a href="phuket.html">Phuket</a></li>
+                <li><a href="chiang-mai.html">Chiang Mai</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Thailand</h1>
+            <p>The Land of Smiles - Where Ancient Temples Meet Pristine Beaches</p>
+            <a href="#explore" class="btn">Explore Now</a>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="explore">
+        <h2 class="section-title">Discover Thailand</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <h3>A Journey Like No Other</h3>
+                <p>Thailand is a Southeast Asian country known for its tropical beaches, opulent royal palaces, ancient ruins, and ornate temples displaying figures of Buddha. The country offers an incredible diversity of experiences, from the bustling metropolis of Bangkok to the serene mountain retreats of Chiang Mai and the pristine islands of Phuket.</p>
+                <p>Known as the "Land of Smiles," Thailand welcomes millions of visitors each year with its warm hospitality, rich cultural heritage, and breathtaking natural beauty. Whether you're seeking adventure, relaxation, cultural immersion, or culinary delights, Thailand has something for everyone.</p>
+                <p>Thailand's unique blend of traditional culture and modern development creates an unforgettable travel experience. From the moment you arrive, you'll be captivated by the friendly locals, vibrant street life, and the stunning landscapes that range from mountainous northern regions to sun-drenched southern beaches.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800" alt="Thailand landscape">
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h2>40M+</h2>
+                <p>Annual Visitors</p>
+            </div>
+            <div class="stat-item">
+                <h2>1,430</h2>
+                <p>Temples</p>
+            </div>
+            <div class="stat-item">
+                <h2>1,430</h2>
+                <p>Islands</p>
+            </div>
+            <div class="stat-item">
+                <h2>700+</h2>
+                <p>Years of History</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cities Preview -->
+    <section>
+        <h2 class="section-title">Top Cities to Explore</h2>
+        <div class="cities-grid">
+            <div class="city-card">
+                <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600" alt="Bangkok">
+                <div class="city-card-content">
+                    <h3>Bangkok</h3>
+                    <p>The vibrant capital city blending ancient temples with modern skyscrapers</p>
+                    <a href="bangkok.html">Discover Bangkok →</a>
+                </div>
+            </div>
+            <div class="city-card">
+                <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600" alt="Phuket">
+                <div class="city-card-content">
+                    <h3>Phuket</h3>
+                    <p>Thailand's largest island famous for stunning beaches and nightlife</p>
+                    <a href="phuket.html">Discover Phuket →</a>
+                </div>
+            </div>
+            <div class="city-card">
+                <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=600" alt="Chiang Mai">
+                <div class="city-card-content">
+                    <h3>Chiang Mai</h3>
+                    <p>Northern cultural hub surrounded by mountains and ancient temples</p>
+                    <a href="chiang-mai.html">Discover Chiang Mai →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section>
+        <h2 class="section-title">Thailand in Pictures</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=800" alt="Thailand">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600" alt="Thai temple">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=600" alt="Thai beach">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800" alt="Phuket">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600" alt="Bangkok">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=600" alt="Thai food">
+            </div>
+        </div>
+    </section>
+
+    <!-- Culture Section -->
+    <section class="culture-section">
+        <h2 class="section-title">Thai Culture & Traditions</h2>
+        <div class="culture-grid">
+            <div class="culture-card">
+                <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=200" alt="Temples">
+                <h3>Ancient Temples</h3>
+                <p>Thailand is home to over 1,400 Buddhist temples, each telling stories of centuries of spiritual devotion and architectural excellence.</p>
+            </div>
+            <div class="culture-card">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200" alt="Thai Food">
+                <h3>Culinary Heritage</h3>
+                <p>Thai cuisine is renowned worldwide for its bold flavors, fresh ingredients, and perfect balance of sweet, sour, salty, and spicy.</p>
+            </div>
+            <div class="culture-card">
+                <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=200" alt="Festivals">
+                <h3>Festivals & Celebrations</h3>
+                <p>From Songkran (Thai New Year) to Loy Krathong (Festival of Lights), Thailand celebrates with colorful traditions and joyful gatherings.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h2>🌴 Thailand Travel Blog</h2>
+            <p>Your guide to exploring the Land of Smiles</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="bangkok.html">Bangkok</a>
