@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student's Daily Quest 🎯</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 🎨 Inspiring Background */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            /* Inspiring gradient background */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating shapes for fun */
+        .bg-shape {
+            position: fixed;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .shape1 { top: 10%; left: 10%; font-size: 80px; animation-delay: 0s; }
+        .shape2 { top: 20%; right: 15%; font-size: 60px; animation-delay: 1s; }
+        .shape3 { bottom: 15%; left: 20%; font-size: 70px; animation-delay: 2s; }
+        .shape4 { bottom: 25%; right: 10%; font-size: 50px; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* 📱 Main Container */
+        .todo-container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 🏆 Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .header .motivational {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* 📊 Progress Bar */
+        .progress-container {
+            background: #eee;
+            border-radius: 20px;
+            height: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* ✏️ Input Section */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 3px solid #eee;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .input-group button {
+            padding: 15px 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 📝 Task List */
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .task-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .task-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .task-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .task-item {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .task-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .task-item.completed {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-color: #96e6a1;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        /* Checkbox */
+        .checkbox {
+            width: 28px;
+            height: 28px;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .checkbox:hover {
+            transform: scale(1.1);
+        }
+
+        .task-item.completed .checkbox {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .checkbox i {
+            color: white;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .task-item.completed .checkbox i {
+            opacity: 1;
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 1rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .task-category {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .category-study { background: #e3f2fd; color: #1976d2; }
+        .category-homework { background: #fff3e0; color: #f57c00; }
+        .category-exam { background: #fce4ec; color: #c2185b; }
+        .category-break { background: #e8f5e9; color: #388e3c; }
+        .category-other { background: #f3e5f5; color: #7b1fa2; }
+
+        .delete-btn {
+            background: #ff6b6b;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-btn:hover {
+            background: #ee5253;
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* 🎯 Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px dashed #eee;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-item .count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-item .label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* 🎉 Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        /* 🎮 Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confetti-fall 3s linear forwards;
+            z-index: 1000;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                top: 100vh;
+                transform: rotate(720deg);
+            }
+        }
+
+        /* 🏆 Completed Message */
+        .success-message {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .todo-container {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .task-item {
+                flex-wrap: wrap;
+            }
+            
+            .task-category {
+                margin-left: 43px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Shapes -->
+    <div class="bg-shape shape1">📚</div>
+    <div class="bg-shape shape2">✏️</div>
+    <div class="bg-shape shape3">🎯</div>
+    <div class="bg-shape shape4">🌟</div>
+
+    <div class="todo-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Daily Student Quest</h1>
+            <p class="motivational">"Success is the sum of small efforts repeated day in and day out!" 💪</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <p class="progress-text" id="progressText">0% of your tasks completed! Let's go! 🚀</p>
+
+        <!-- Input Section -->
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <select id="categorySelect" style="padding: 15px; border: 3px solid #eee; border-radius: 15px; font-family: 'Poppins', sans-serif;">
+                <option value="study">📖 Study</option>
+                <option value="homework">📝 Homework</option>
+                <option value="exam">📚 Exam Prep</option>
+                <option value="break">☕ Break</option>
+                <option value="other">✨ Other</option>
+            </select>
+            <button onclick="addTask()">➕</button>
+        </div>
+
+        <!-- Task List -->
+        <ul class="task-list" id="taskList">
+            <!-- Tasks will be added here -->
+        </ul>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="icon">📋</div>
+                <div class="count" id="totalTasks">0</div>
+                <div class="label">Total</div>
+            </div>
+            <div class="stat-item">
+                <div class="icon">✅</div>
+                <div class="count" id="completedTasks">0</div>
+                <div class="label">Done</div>
+            </div>
+            <div class="stat-item">
+                <div class="icon">🔥</div>
+                <div class="count" id="streakDays">1</div>
+                <div class="label">Day Streak</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 📝 Task Management
+        let tasks = JSON.parse(localStorage.getItem('studentTasks')) || [];
+        let streak = parseInt(localStorage.getItem('streak')) || 1;
+
+        // Category icons
+        const categoryIcons = {
+            study: '📖',
+            homework: '📝',
+            exam: '📚',
+            break: '☕',
+            other: '✨'
+        };
+
+        // Render tasks
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+
+            if (tasks.length === 0) {
+                taskList.innerHTML = `
+                    <div class="empty-state">
+                        <i>🎯</i>
+                        <p>No tasks yet! Add your first task to start your quest!</p>
+                    </div>
+                `;
+            } else {
+                tasks.forEach((task, index) => {
+                    const li = document.createElement('li');
+                    li.className = `task-item ${task.completed ? 'completed' : ''}`;
+                    li.innerHTML = `
+                        <div class="checkbox" onclick="toggleTask(${index})">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span class="task-text">${task.text}</span>
+                        <span class="task-category category-${task.category}">${categoryIcons[task.category]} ${task.category}</span>
+                        <button class="delete-btn" onclick="deleteTask(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                    taskList.appendChild(li);
+                });
+            }
+
+            updateStats();
+        }
+
+        // Add new task
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const category = document.getElementById('categorySelect');
+            const text = input.value.trim();
+
+            if (text === '') {
+                // Shake animation for empty input
+                input.style.animation = 'shake 0.5s';
+                setTimeout(() => input.style.animation = '', 500);
+                return;
+            }
+
+            tasks.push({
+                text: text,
+                category: category.value,
+                completed: false,
+                createdAt: new Date().toLocaleDateString()
+            });
+
+            saveTasks();
+            renderTasks();
+            input.value = '';
+            input.focus();
+        }
+
+        // Toggle task completion
+        function toggleTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            
+            if (tasks[index].completed) {
+                createConfetti();
+            }
+            
+            saveTasks();
+            renderTasks();
+        }
+
+        // Delete task
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = tasks.length;
+            const completed = tasks.filter(t => t.completed)..length;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = 
+                percentage === 100 && total > 0 
+                    ? '🎉 AMAZING! All tasks completed! You\'re a champion!' 
+                    : `${percentage}% completed! Keep going! 🚀`;
+
+            // Check for all completed
+            if (percentage === 100 && total > 0) {
+                createConfetti();
+                createConfetti();
+                createConfetti();
+            }
+        }
+
+        // Save to localStorage
+        function saveTasks() {
+            localStorage.setItem('studentTasks', JSON.stringify(tasks));
